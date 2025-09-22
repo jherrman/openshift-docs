@@ -97,7 +97,8 @@ This release adds new features and enhancements related to the following compone
 
 //CNV-59719
 * The following link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/virtualization/monitoring#virt-runbooks[alerts for the OpenShift Virtualization operator] are now included in the {product-title} runbooks: 
-
++
+--
 ** `HighNodeCPUFrequency`
 ** `VirtualMachineStuckInUnhealthyState`
 ** `VirtualMachineStuckOnNode`
@@ -106,7 +107,8 @@ This release adds new features and enhancements related to the following compone
 ** `HCOGoldenImageWithNoSupportedArchitecture`
 ** `HCOGoldenImageWithNoArchitectureAnnotation`
 ** `HCOMultiArchGoldenImagesDisabled`
-
+--
++
 For a complete list of virtualization metrics, see link:https://github.com/kubevirt/monitoring/blob/main/docs/metrics.md[KubeVirt components metrics]. 
 
 [id="virt-4-20-documentation_{context}"]
