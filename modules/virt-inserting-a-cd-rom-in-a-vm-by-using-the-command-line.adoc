@@ -7,44 +7,69 @@
 
 // See https://kubevirt.io/user-guide/storage/hotplug_volumes/#inject-cd-rom for upstream info
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+TBA intro
+
+[IMPORTANT]
+====
+This feature is currently provided as a Technology Preview in {product-title}. For more information, see link:https://access.redhat.com/support/offerings/techpreview/?extIdCarryOver=true&sc_cid=RHCTG0180000371695[Technology Preview features - Scope of Support] in Red Hat Knowledgebase.
+====
 
 .Prerequisites
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
-* Do not use imperative statements in the Prerequisites section.
+
+* You have an ISO image of a CD-ROM available in the cluster 
 
 .Procedure
-. Make each step an instruction.
-. Include one imperative sentence for each step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing, and this other thing, and then select *Next*.
-. Use an unnumbered bullet (*) if the procedure includes only one step.
+
+. Open the configuration of the VM in which you want to insert the CD-ROM:
 +
-NOTE: You can add text, tables, code examples, images, and other items to a step. However, these items must be connected to the step with a plus sign (+). Any items under the .Procedure heading and before one of the following approved headings that are not connected to the last step with a plus sign cannot be converted to DITA.
+[source,terminal]
+----
+$ oc edit _<vm-name>_ _<namespace>_
+----
++
+where:
 
-.Verification
-Delete this section if it does not apply to your module. Provide the user with verification methods for the procedure, such as expected output or commands that confirm success or failure.
+* _<vm-name>_ is the name of the VM
+* _<project>_ is the name of the project name space that contains the VM
 
-* Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
-* List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the verification includes only one step.
+. Add a `cdrom` disk to the `spec.template.spec.domains.devices.disks` section of the configuration:
++
+[source,yaml]
+----
+spec:
+  runStrategy: Always
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+          - cdrom:
+              bus: sata
+              name: cdrom
+# ...
+----
 
-.Troubleshooting
-Delete this section if it does not apply to your module. Provide the user with troubleshooting steps.
+. If the VM is running, shut it down.
 
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the troubleshooting includes only one step.
+. Insert a CD-ROM volume in the `spec.template.spec.volumes` section of the configuration, for example as follows:
++
+[source,yaml]
+----
+      volumes:
+      - dataVolume:
+          name: cdrom-example
+          hotpluggable: true
+        name: cdrom
+----
++
+[NOTE]
+====
+You can also do this when the VM is running.
+====
 
-.Next steps
-* Delete this section if it does not apply to your module.
-* Provide a bulleted list of links that contain instructions that might be useful to the user after they complete this procedure.
-* Use an unnumbered bullet (*) if the list includes only one step.
+. Optional: Eject the CD-ROM volume. To do so, remove the `cdrom` device from the `spec.template.spec.volumes` section of the VM configuration.
 
-NOTE: Do not use *Next steps* to provide a second list of instructions.
-
-[role="_additional-resources"]
-.Additional resources
-* link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide]
+// [role="_additional-resources"]
+// .Additional resources
+// * TBA?
 
