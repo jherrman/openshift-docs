@@ -96,7 +96,7 @@ This release adds new features and enhancements related to the following compone
 * Added documentation for the `kubevirt_vmi_vcpu_delay_seconds_total` Prometheus metric. This metric reports the time a virtual CPU (vCPU) was queued by the host scheduler but was not running. The updated documentation helps users better understand vCPU queue delays in OpenShift Virtualization environments.
 
 //CNV-59719
-* The following link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/virtualization/monitoring#virt-runbooks[alerts for the OpenShift Virtualization operator] are now included in the {product-title} runbooks: 
+* The following xref:../../virt/monitoring/virt-runbooks.adoc#virt-runbooks[alerts for the {CNVOperatorDisplayName}] are now included in the {product-title} runbooks:
 +
 --
 ** `HighNodeCPUFrequency`
