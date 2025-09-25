@@ -5,18 +5,35 @@
 [id="virt-inserting-a-cd-rom-in-a-vm-by-using-the-command-line_{context}"]
 = Inserting a CD-ROM in a VM by using the command line
 
-// See https://kubevirt.io/user-guide/storage/hotplug_volumes/#inject-cd-rom for upstream info
+[role="_abstract"]
+To make data on a CD-ROM storage device available to a virtual machine (VM) in {product-title}, create a virtual CD-ROM drive in the VM and insert the CD-ROM into the drive as an ISO image.
 
-TBA intro
+Setting up a virtual CD-ROM drive requires rebooting the VM, but you can insert and eject ISO images in the drive while the VM is running.
+// See https://kubevirt.io/user-guide/storage/hotplug_volumes/#inject-cd-rom for upstream info
 
 [IMPORTANT]
 ====
-This feature is currently provided as a Technology Preview in {product-title}. For more information, see link:https://access.redhat.com/support/offerings/techpreview/?extIdCarryOver=true&sc_cid=RHCTG0180000371695[Technology Preview features - Scope of Support] in Red Hat Knowledgebase.
+ CD-ROMs are currently provided as a Technology Preview in {product-title}. For more information, see link:https://access.redhat.com/support/offerings/techpreview/?extIdCarryOver=true&sc_cid=RHCTG0180000371695[Technology Preview features - Scope of Support] in Red Hat Knowledgebase.
 ====
 
 .Prerequisites
 
-* You have an ISO image of a CD-ROM available in the cluster 
+* The `DeclarativeHotplugVolumes` feature gate must be enabled. To ensure this, the `HyperConverged` CR must contain the `declarativeHotplugVolumes: true` line in the `spec.featureGates` configuration section:
+
++
+[source,yaml]
+----
+spec:
+    featureGates:
+      declarativeHotplugVolumes: true
+----
++
+[Warning]
+====
+The `DeclarativeHotplugVolumes` feature gate is incompatible with the `HotplugVolumes` feature gate, which is required for using ephemeral volumes. To use `DeclarativeHotplugVolumes`, you must also disable `HotplugVolumes` in the `HyperConverged` CR.
+====
+
+* You have an ISO image of a CD-ROM available in the cluster.
 
 .Procedure
 
@@ -67,7 +84,7 @@ spec:
 You can also do this when the VM is running.
 ====
 
-. Optional: Eject the CD-ROM volume. To do so, remove the `cdrom` device from the `spec.template.spec.volumes` section of the VM configuration.
+. Optional: Eject the CD-ROM volume. To do so, remove the `cdrom` device from the `spec.template.spec.volumes` section of the VM configuration. You can also do this when the VM is running.
 
 // [role="_additional-resources"]
 // .Additional resources
