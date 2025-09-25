@@ -13,9 +13,22 @@ This feature is currently provided as a Technology Preview in {product-title}. F
 ====
 
 .Prerequisites
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
-* Do not use imperative statements in the Prerequisites section.
+* The `DeclarativeHotplugVolumes` feature gate must be enabled. To ensure this, the `HyperConverged` CR must contain the ``DeclarativeHotplugVolumes` line in the `spec.configuration.developerConfiguration.featureGates` configuration section:
+
++
+[source,yaml]
+----
+spec:
+  configuration:
+    developerConfiguration:
+      featureGates:
+        - DeclarativeHotplugVolumes
+----
++
+[Warning]
+====
+The `DeclarativeHotplugVolumes` is incompatible with the `HotplugVolumes` feature gate, which is required for using ephemeral volumes. To use `DeclarativeHotplugVolumes`, you must also remove `HotplugVolumes` from the `HyperConverged` CR.
+====
 
 .Procedure
 
@@ -24,6 +37,20 @@ This feature is currently provided as a Technology Preview in {product-title}. F
 . Click the name of the VM in which you want to insert the CD-ROM.
 
 . On the VM details page, click the `Configuration` tab.
+
+. Open the `Storage` pane.
+
+. Click `Add`.
++
+A drop-down menu opens.
+
+. Click `CD-ROM`.
+
+. In the `Name` field, add a name for the CD-ROM drive device.
+
+. Optional: To upload a new ISO file, ensure that the `` line is checked.
+
+. Click `Add`.
 
 . TODO: the rest of the steps
 
